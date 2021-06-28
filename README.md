@@ -2,7 +2,7 @@
 
 ## Summary
 This sample Bot adds itself to the call when meeting "Start" event is received and drops/removes itself from the call when all the participants have left the call. Meeting "End" event is received when the bot drops the call. The Bot also tracks participants in the call.<br/>
-`OnEventActivityAsync` is called on meeting start/end event.
+`OnEventActivityAsync` is called on meeting start/end event.<br/>
 Samples are generally not production-ready or an out-of-the-box solution but are intended to show developers specific patterns for use in their applications. The functionality is bare bone, all it does is tracks participants in the call once the bot is added to the meeting. 
 
 ## Prerequisites
