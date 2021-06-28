@@ -53,23 +53,17 @@ namespace MeetingEventsCallingBot.Bots
 
         protected override async Task OnEventActivityAsync(ITurnContext<IEventActivity> turnContext, CancellationToken cancellationToken)
         {
-            
             if (turnContext.Activity.Type == "event")
             {
-                string eventData = turnContext.Activity.Value.ToString();
-                JObject data = JObject.Parse(eventData);
-                Dictionary<string, string> dict = new Dictionary<string, string>();
-                foreach (JProperty prop in data.Properties())
-                {
-                    dict.Add(prop.Name, data.GetValue(prop.Name).ToObject<string>());
-                };
+                var meetingEventInfo = turnContext.Activity.Value as JObject;
+                var meetingEventInfoObject = meetingEventInfo.ToObject<MeetingStartEndEventValue>();
 
-                if (dict.ContainsKey("StartTime") && dict.ContainsKey("JoinUrl"))
+                if (meetingEventInfoObject.StartTime != null)
                 {
                     await turnContext.SendActivityAsync(MessageFactory.Text("Meeting Started ..."));
-                    await this.JoinCallAsync(dict.GetValueOrDefault("JoinUrl"));
+                    await this.JoinCallAsync(meetingEventInfoObject.JoinUrl);
                 } 
-                else if (dict.ContainsKey("EndTime"))
+                else if (meetingEventInfoObject.EndTime != null)
                 {
                     await turnContext.SendActivityAsync(MessageFactory.Text("Meeting Ended ..."));
                 }
