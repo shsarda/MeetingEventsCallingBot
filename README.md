@@ -1,8 +1,7 @@
 # MeetingEventsCallingBot
 
-
 ## Summary
-This sample Bot adds itself to the call when meeting "Start" event is received and drops/removes itself from the call when all the participants have left the call. Meeting "End" event is received when the bot drops the call. The Bot also tracks participants in the call.
+This sample Bot adds itself to the call when meeting "Start" event is received and drops/removes itself from the call when all the participants have left the call. Meeting "End" event is received when the bot drops the call. The Bot also tracks participants in the call.<br/>
 Samples are generally not production-ready or an out-of-the-box solution but are intended to show developers specific patterns for use in their applications. The functionality is bare bone, all it does is tracks participants in the call once the bot is added to the meeting. 
 
 ## Prerequisites
@@ -12,13 +11,13 @@ Samples are generally not production-ready or an out-of-the-box solution but are
 ## Setup Guide
 
 ### Step #1: Create AAD App
-- Go to Azure Active Directory -> App registrations -> New registration.
+- In Azure portal, go to Azure Active Directory -> App registrations -> New registration.
 - Register an app.
 	- Provide app Name and choose Multitenant. Leave the redirect URI for now.<br/>
 	![](./Images/Setup_Step1_1.png)
 	- Create Client Secret<br/>
 	![](./Images/Setup_Step1_2.png)<br/>
-	- Note the Application (Client) Id and Client Serect for further steps.
+	- Note the Application (Client) Id and Client Secret for further steps.
 
 ### Step #2: Register in Bot Service
 - Create a Bot Channel Registration in Azure in different tab. Auto create App ID and password<br/>
@@ -52,14 +51,23 @@ For more details on adding above graph permissions, checkout [Call Permissions](
     - Sign in with a tenant admin
     - Consent for the whole tenant.
 
-### Step #4: Run the app locally
+### Step #4: Enable resource-specific consent (RSC) in your app
+- Sign in to the Azure portal as tenant admin.
+- Select Azure Active Directory -> Enterprise applications -> Consent and permissions -> User consent settings.
+- Allow group owner consent for all group owners. For a team owner to install an app using RSC, group owner consent must be enabled for that user.
+![](./Images/Setup_Step4_1.png)<br/>
+- Allow user consent for apps. For a chat member to install an app using RSC, user consent must be enabled for that user.
+![](./Images/Setup_Step4_2.png)<br/>
+- To understand more about enabling RSC permissions, checkout [RSC](https://docs.microsoft.com/en-us/microsoftteams/platform/graph-api/rsc/resource-specific-consent#enable-resource-specific-consent-in-your-application)
+
+### Step #5: Run the app locally
 - Clone the repo <br/>
 `git@github.com:shsarda/MeetingEventsCallingBot.git`
 
 - If you are using Visual Studio
 	- Launch Visual Studio
 	- File -> Open -> Project/Solution
-	- Open callingbot-sample -> MeetingEventsCallingBot.sln
+	- Open MeetingEventsCallingBot -> MeetingEventsCallingBot.sln
 
 - Edit appsettings.json file
 	- Update MicrosoftAppId/AppId and MicrosoftAppId/AppSecret as values of Application Id and Client Secret from Step #1.
@@ -67,23 +75,23 @@ For more details on adding above graph permissions, checkout [Call Permissions](
 
 - Run ngrok using the port on which the project is running locally.
 
-### Step #5: Packaging and installing your app to Teams
+### Step #6: Packaging and installing your app to Teams
 
 - Enabling "supportsCalling" in manifest
 	- Add two additional settings supportsCalling and supportsVideo (already enabled in manifest for this sample)
-	![](./Images/Setup_Step5_1.png)<br/>
+	![](./Images/Setup_Step6_1.png)<br/>
 
 - Enable RSC permission in manifest
 	- Enable `OnlineMeeting.ReadBasic.Chat` in manifest (already enabled in manifest for this sample)
-	![](./Images/Setup_Step5_2.png)<br/>
+	![](./Images/Setup_Step6_2.png)<br/>
 
 Make sure the required values (such as App id) are populated in the manifest, Zip the manifest with the profile images and install it in Teams.
 
-### Step #6: Try out the app
+### Step #7: Try out the app
 
 - Enable developer preview in your debugging Teams client.
-![](./Images/Setup_Step6_1.png)
+![](./Images/Setup_Step7_1.png)
 
 - Start the meeting and call the bot from meeting.
-![](./Images/Setup_Step6_2.png)
+![](./Images/Setup_Step7_2.png)
 
