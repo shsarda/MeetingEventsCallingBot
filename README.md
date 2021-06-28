@@ -93,6 +93,6 @@ Make sure the required values (such as App id) are populated in the manifest, Zi
 - Enable developer preview in your debugging Teams client.
 ![](./Images/Setup_Step7_1.png)
 
-- Start the meeting and call the bot from meeting.
+- Add app to a scheduled meeting. Join the meeting to use the app.
 ![](./Images/Setup_Step7_2.png)
 
